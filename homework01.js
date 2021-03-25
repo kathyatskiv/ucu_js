@@ -13,7 +13,8 @@ function tuckIn(arrA, arrB){
 
 // Testing #1
 console.log("Task 1")
-console.log(tuckIn([1,2],[3,6,8])); // [1,3,6,8,2]
+console.log(tuckIn([1,10],[2,3,4,5,6,7,8,9])); // [1,2,3,4,5,6,7,8,9,10]
+console.log(tuckIn([15,150],[45,75,35])); // [15,45,75,35,150]
 console.log(tuckIn([[1,2],[5,6]],[[3,4]])); // [[1,2],[3,4],[5,6]]
 console.log(tuckIn(['a','f'],['b','c','d','e'])); // ['a','b','c','d','e','f']
 console.log(tuckIn([1,2,3,4],[3,6,8]) + "\n\n"); // null
@@ -37,6 +38,22 @@ function minMax(arr){
 console.log("Task 2")
 console.log(minMax([1,2,3,4,5])); // [1,5]
 console.log(minMax([-100,0,2546])); // [-100,2546]
+console.log(minMax([2334454,5])); // [5,2334454]
 console.log(minMax([1])); // [1,1]
 console.log("\n\n");
 
+//#3 Check if One Array can be Nested in Another
+function canNest(arrA, arrB){
+    let minMaxA = minMax(arrA);
+    let minMaxB = minMax(arrB);
+    
+    let res = (minMaxA[0] > minMaxB[0]) && (minMaxA[1] < minMaxB[1]) ? true : false;
+    return res;
+}
+
+// Testing #3
+console.log("Task 3")
+console.log(canNest([1,2,3,4],[0,6])); // true
+console.log(canNest([3,1],[4,0])); // true
+console.log(canNest([9,9,8],[8,9])); // false
+console.log(canNest([1,2,3,4],[2,3])); //false
