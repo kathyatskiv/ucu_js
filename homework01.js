@@ -27,8 +27,8 @@ function minMax(arr){
     let max = arr[0];
 
     arr.forEach(element => {
-        element > max ? max = element :
-        element < min ? min = element : null;
+        max = (element > max) ? element : max
+        min = (element < min) ? element : min;
     });
 
     return [min,max];
