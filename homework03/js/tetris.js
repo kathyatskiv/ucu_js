@@ -16,20 +16,36 @@ function Tetris(state = GAME_STATES.PAUSED) {
   const getCurrentFigure = () =>
     this.figures.find(figure => figure.state === STATES.FALLING) || addFigure();
 
-  const events = (keyCode) => { // TODO: this seems to have refactoring potential
+  const events = (teris, keyCode) => { // TODO: this seems to have refactoring potential
     const eventsMap = {
       [DOWN]() {
-        getCurrentFigure().move(DOWN);
+        if(tetris.state != GAME_STATES.PAUSED)
+          getCurrentFigure().move(DOWN);
       },
       [RIGHT]() {
-        getCurrentFigure().move(RIGHT);
+        if(tetris.state != GAME_STATES.PAUSED)
+          getCurrentFigure().move(RIGHT);
       },
       [LEFT]() {
-        getCurrentFigure().move(LEFT);
+        if(tetris.state != GAME_STATES.PAUSED)
+          getCurrentFigure().move(LEFT);
       },
       [PAUSE]() {
-        console.log('event PAUSE'); // TODO: KILL/REMOVE INTERVAL?
-        this.state = GAME_STATES.PAUSED; // ?? TODO:
+
+        // DONE: Paused
+        
+        if(tetris.state == GAME_STATES.PLAYING){
+          console.log('event PAUSE')
+
+          clearInterval(gameInverval)
+          tetris.state = GAME_STATES.PAUSED
+        } 
+        else{
+          console.log('event RESUME')
+
+          tetris.play()
+        }
+
       },
     }
 
@@ -49,13 +65,14 @@ function Tetris(state = GAME_STATES.PAUSED) {
     this.state = GAME_STATES.PLAYING; // TODO:
 
     playground.render();
-    document.addEventListener('keydown', ({keyCode}) =>  events(keyCode));
+    document.addEventListener('keydown', ({keyCode}) =>  events(this, keyCode));
 
     gameInverval = setInterval(() => { // TODO: maybe it's better to have a separate method for this?
       getCurrentFigure().move(DOWN);
       destroyLine(); // TODO: not sure where this method shoud be. Maybe in moveDown?
       checkForGameOver(); // TODO
     }, INTERVAL);
+
   };
 }
 
