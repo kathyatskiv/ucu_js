@@ -40,23 +40,30 @@ async function departmentBtn(element){
 
 
     const requests = top10obj.map(objId => fetch(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${objId}`));
+
+    document.getElementById("row0").innerHTML = "";
+    document.getElementById("row1").innerHTML = "";
     
     Promise.all(requests)
     .then(responses => {
 
-        for(let response of responses) {
-            getInfo(response);
+        for(let i = 0; i < responses.length; i++) {
+            getInfo(responses[i], i);
           }
     })
 }
 
-async function getInfo(promise){
+async function getInfo(promise, i){
     const container = document.getElementById("container");
 
-    <div class="col-sm">
-    </div>
+    const row = (i<5) ? document.getElementById("row0") : document.getElementById("row1");
 
     let ans = await promise.json();
+    row.innerHTML += `<div class="col-sm elem">
+    <img src="${ans["primaryImage"]}" alt="${ans["title"]}" class="elem-image">
+    ${ans["title"]}
+    </div>`
+
     console.log(ans);
     
 
